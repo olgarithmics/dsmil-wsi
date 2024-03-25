@@ -1,12 +1,12 @@
-batch_size: 4096
+batch_size: 1024
 epochs: 100
 eval_every_n_epochs: 1
-fine_tune_from: ''
+fine_tune_from: 'tcga_lung/'
 log_every_n_steps: 25
 weight_decay: 10e-6
 fp16_precision: False
-n_gpu: 1
-gpu_ids: (0)
+n_gpu: 4
+gpu_ids: '0,1,2,3'
 
 model:
   out_dim: 256
