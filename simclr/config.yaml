@@ -1,4 +1,4 @@
-batch_size: 2048
+batch_size: 1024
 epochs: 100
 eval_every_n_epochs: 1
 fine_tune_from: 'tcga_lung/'
