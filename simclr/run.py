@@ -14,6 +14,7 @@ def generate_csv(args):
         patch_path = glob.glob(path_temp) # /class_name/bag_name/*.jpeg
     if args.multiscale==0:
         path_temp = os.path.join('/data/scratch/DBI/DUDBI/DYNCESYS/', 'GOSH', args.dataset, 'single_brca', '*', '*', '*.jpeg')
+        print (path_temp)
         patch_path = glob.glob(path_temp) # /class_name/bag_name/*.jpeg
     df = pd.DataFrame(patch_path)
     df.to_csv('all_patches.csv', index=False)
