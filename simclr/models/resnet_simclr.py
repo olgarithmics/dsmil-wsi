@@ -1,6 +1,22 @@
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
+import torch
+from collections import OrderedDict
+
+
+class IClassifier(nn.Module):
+    def __init__(self, feature_extractor, feature_size, output_class):
+        super(IClassifier, self).__init__()
+
+        self.features = nn.Sequential(*list(feature_extractor.children())[:-1])
+        self.fc = nn.Linear(feature_size, output_class)
+
+    def forward(self, x):
+        device = x.device
+        feats = self.features(x)  # N x K
+        c = self.fc(feats.view(feats.shape[0], -1))  # N x C
+        return feats.view(feats.shape[0], -1), c
 
 
 class ResNetSimCLR(nn.Module):
@@ -20,10 +36,12 @@ class ResNetSimCLR(nn.Module):
 
         num_ftrs = resnet.fc.in_features
 
-        self.features = nn.Sequential(*list(resnet.children())[:-1])
+        self.i_classifier = IClassifier(resnet, num_ftrs, output_class=num_ftrs).cuda()
 
-        # projection MLP
-        self.l1 = nn.Linear(num_ftrs, num_ftrs)
+        state = torch.load('runs/tcga_lung/checkpoints/model-v0.pth', map_location='cuda:0')
+        state_dict = state['state_dict']
+        for key in list(state_dict.keys()):
+            state_dict[key.replace('model.', '').replace('resnet.', '')] = state_dict.pop(key)
         self.l2 = nn.Linear(num_ftrs, out_dim)
 
     def _get_basemodel(self, model_name):
@@ -34,11 +52,21 @@ class ResNetSimCLR(nn.Module):
         except:
             raise ("Invalid model name. Check the config file and pass one of: resnet18 or resnet50")
 
-    def forward(self, x):
-        h = self.features(x)
-        h = h.squeeze()
 
-        x = self.l1(h)
-        x = F.relu(x)
+    def load_model_weights(self, model, weights):
+        state_dict_weights = torch.load(weights)
+        state_dict_init = model.state_dict()
+        new_state_dict = OrderedDict()
+        for (k, v), (k_0, v_0) in zip(state_dict_weights.items(), state_dict_init.items()):
+            name = k_0
+            new_state_dict[name] = v
+        model.load_state_dict(new_state_dict, strict=False)
+        return model
+
+    def forward(self, x):
+
+        feats, h = self.i_classifier(x)
+
+        x = F.relu(h)
         x = self.l2(x)
-        return h, x
+        return feats, x

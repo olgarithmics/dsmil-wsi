@@ -43,6 +43,8 @@ class SimCLR(object):
         print ("Available cuda devices:", torch.cuda.device_count(),  flush=True)
         return device
 
+
+
     def _step(self, model, xis, xjs, n_iter):
 
         # get the representations and the projections
