@@ -38,10 +38,8 @@ class ResNetSimCLR(nn.Module):
 
         self.i_classifier = IClassifier(resnet, num_ftrs, output_class=num_ftrs).cuda()
 
-        state = torch.load('runs/tcga_lung/checkpoints/model-v0.pth', map_location='cuda:0')
-        state_dict = state['state_dict']
-        for key in list(state_dict.keys()):
-            state_dict[key.replace('model.', '').replace('resnet.', '')] = state_dict.pop(key)
+        self.load_model_weights(self.i_classifier,'runs/tcga_lung/checkpoints/model-v0.pth')
+
         self.l2 = nn.Linear(num_ftrs, out_dim)
 
     def _get_basemodel(self, model_name):

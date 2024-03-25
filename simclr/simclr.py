@@ -43,8 +43,6 @@ class SimCLR(object):
         print ("Available cuda devices:", torch.cuda.device_count(),  flush=True)
         return device
 
-
-
     def _step(self, model, xis, xjs, n_iter):
 
         # get the representations and the projections
@@ -73,7 +71,6 @@ class SimCLR(object):
         if self.config['n_gpu'] > 1:
             device_n = 4
             model = torch.nn.DataParallel(model)
-
 
         optimizer = torch.optim.Adam(model.parameters(), 1e-5, weight_decay=eval(self.config['weight_decay']))
 
