@@ -11,6 +11,13 @@ class ResNetSimCLR(nn.Module):
                             "resnet50": models.resnet50(pretrained=False, norm_layer=nn.InstanceNorm2d)}
 
         resnet = self._get_basemodel(base_model)
+
+        for param in resnet.parameters():
+            param.requires_grad = False
+
+        for param in resnet.layer4.parameters():
+            param.requires_grad = True
+
         num_ftrs = resnet.fc.in_features
 
         self.features = nn.Sequential(*list(resnet.children())[:-1])

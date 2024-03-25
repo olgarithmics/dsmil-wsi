@@ -67,11 +67,6 @@ class SimCLR(object):
         model = self._load_pre_trained_weights(model)
         model = model.to(self.device)
 
-        for param in model.parameters():
-            param.requires_grad = False
-
-        for param in model.layer4.parameters():
-            param.requires_grad = True
 
         if self.config['n_gpu'] > 1:
             device_n = 4
