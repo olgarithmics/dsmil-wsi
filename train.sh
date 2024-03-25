@@ -4,7 +4,7 @@
 #SBATCH --error=/home/ofourkioti/Projects/dsmil-wsi/error.err
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --time=168:00:00
+#SBATCH --time=00:05:00
 #SBATCH --gres=gpu:4
 #SBATCH --partition=gpuhm
 
