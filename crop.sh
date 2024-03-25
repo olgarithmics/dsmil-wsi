@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=crop
-#SBATCH -o comp.out
-#SBATCH -e comp.err
+#SBATCH --output=/home/ofourkioti/Projects/dsmil-wsi/comp.out
+#SBATCH --error=/home/ofourkioti/Projects/dsmil-wsi/comp.err
 #SBATCH --partition=compute
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
