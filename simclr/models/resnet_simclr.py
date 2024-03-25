@@ -18,7 +18,6 @@ class IClassifier(nn.Module):
         c = self.fc(feats.view(feats.shape[0], -1))  # N x C
         return feats.view(feats.shape[0], -1), c
 
-
 class ResNetSimCLR(nn.Module):
 
     def __init__(self, base_model, out_dim):
@@ -63,9 +62,7 @@ class ResNetSimCLR(nn.Module):
         return model
 
     def forward(self, x):
-
         feats, h = self.i_classifier(x)
-
         x = F.relu(h)
         x = self.l2(x)
         return feats, x

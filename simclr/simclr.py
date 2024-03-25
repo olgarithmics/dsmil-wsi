@@ -121,7 +121,7 @@ class SimCLR(object):
                 if valid_loss < best_valid_loss:
                     # save the model weights
                     best_valid_loss = valid_loss
-                    torch.save(model.state_dict(), os.path.join(model_checkpoints_folder, 'model.pth'))
+                    torch.save(model.state_dict(), os.path.join(model_checkpoints_folder, 'brca_model.pth'))
                     print('saved')
 
                 self.writer.add_scalar('validation_loss', valid_loss, global_step=valid_n_iter)
