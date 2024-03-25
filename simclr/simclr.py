@@ -14,7 +14,7 @@ try:
 
     apex_support = True
 except:
-    print("Please install apex for mixed precision training from: https://github.com/NVIDIA/apex")
+    print("Please install apex for mixed precision training from: https://github.com/NVIDIA/apex", flush=True)
     apex_support = False
 
 import numpy as np
@@ -39,8 +39,8 @@ class SimCLR(object):
 
     def _get_device(self):
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        print("Running on:", device)
-        print ("Available cuda devices:", torch.cuda.device_count())
+        print("Running on:", device,  flush=True)
+        print ("Available cuda devices:", torch.cuda.device_count(),  flush=True)
         return device
 
     def _step(self, model, xis, xjs, n_iter):
@@ -138,9 +138,9 @@ class SimCLR(object):
             checkpoints_folder = os.path.join('./runs', self.config['fine_tune_from'], 'checkpoints')
             state_dict = torch.load(os.path.join(checkpoints_folder, 'model-v0.pth'))
             model.load_state_dict(state_dict)
-            print("Loaded pre-trained model with success.")
+            print("Loaded pre-trained model with success.",  flush=True)
         except FileNotFoundError:
-            print("Pre-trained weights not found. Training from scratch.")
+            print("Pre-trained weights not found. Training from scratch.",  flush=True)
         return model
 
     def _validate(self, model, valid_loader):
