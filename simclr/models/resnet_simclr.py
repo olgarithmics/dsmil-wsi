@@ -38,7 +38,7 @@ class ResNetSimCLR(nn.Module):
 
         self.i_classifier = IClassifier(resnet, num_ftrs, output_class=num_ftrs).cuda()
 
-        self.load_model_weights(self.i_classifier,'runs/tcga_lung/checkpoints/model-v0.pth')
+        self.i_classifier = self.load_model_weights(self.i_classifier,'runs/tcga_lung/checkpoints/model-v0.pth')
 
         self.l2 = nn.Linear(num_ftrs, out_dim)
 
@@ -59,6 +59,7 @@ class ResNetSimCLR(nn.Module):
             name = k_0
             new_state_dict[name] = v
         model.load_state_dict(new_state_dict, strict=False)
+        print ('Loading weights from checkpoint', flush=True)
         return model
 
     def forward(self, x):
