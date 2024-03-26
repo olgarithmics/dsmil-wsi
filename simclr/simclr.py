@@ -86,6 +86,7 @@ class SimCLR(object):
                                               keep_batchnorm_fp32=True)
 
         model_checkpoints_folder = os.path.join(self.writer.log_dir, 'checkpoints')
+        print (model_checkpoints_folder, flush=True)
 
         # save config file
         _save_config_file(model_checkpoints_folder)
@@ -105,6 +106,7 @@ class SimCLR(object):
 
                 if n_iter % self.config['log_every_n_steps'] == 0:
                     self.writer.add_scalar('train_loss', loss, global_step=n_iter)
+                    print ('Train Epoch: {} train loss: {}'.format(epoch_counter, loss), flush=True)
 
                 if apex_support and self.config['fp16_precision']:
                     with amp.scale_loss(loss, optimizer) as scaled_loss:
@@ -121,8 +123,9 @@ class SimCLR(object):
                 if valid_loss < best_valid_loss:
                     # save the model weights
                     best_valid_loss = valid_loss
+                    print('Train Epoch: {} Valid loss: {}'.format(epoch_counter, valid_loss), flush=True)
                     torch.save(model.state_dict(), os.path.join(model_checkpoints_folder, 'brca_model.pth'))
-                    print('saved')
+                    print('saved', flush=True)
 
                 self.writer.add_scalar('validation_loss', valid_loss, global_step=valid_n_iter)
                 valid_n_iter += 1
