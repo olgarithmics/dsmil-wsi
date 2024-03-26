@@ -106,7 +106,7 @@ class SimCLR(object):
 
                 if n_iter % self.config['log_every_n_steps'] == 0:
                     self.writer.add_scalar('train_loss', loss, global_step=n_iter)
-                    print ('Train Epoch: {} train loss: {}'.format(epoch_counter, loss), flush=True)
+                    print ('Train step: {} train loss: {}'.format(n_iter, loss), flush=True)
 
                 if apex_support and self.config['fp16_precision']:
                     with amp.scale_loss(loss, optimizer) as scaled_loss:
