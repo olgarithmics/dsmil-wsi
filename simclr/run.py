@@ -13,7 +13,7 @@ def generate_csv(args):
         path_temp = os.path.join('/data/scratch/DBI/DUDBI/DYNCESYS/', 'GOSH', args.dataset, 'pyramid', '*', '*', '*.jpeg')
         patch_path = glob.glob(path_temp) # /class_name/bag_name/*.jpeg
     if args.multiscale==0:
-        path_temp = os.path.join('/data/scratch/DBI/DUDBI/DYNCESYS/', 'GOSH', args.dataset, 'single_brca', '*', '*.jpeg')
+        path_temp = os.path.join('/data/scratch/DBI/DUDBI/DYNCESYS/', 'GOSH', args.dataset, 'single_rcc', '*', '*.jpeg')
         patch_path = glob.glob(path_temp) # /class_name/bag_name/*.jpeg
     df = pd.DataFrame(patch_path)
     df.to_csv('all_patches.csv', index=False)

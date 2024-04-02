@@ -14,8 +14,6 @@ from PIL import Image
 from collections import OrderedDict
 from sklearn.utils import shuffle
 
-
-
 class BagDataset():
     def __init__(self, csv_file, transform=None):
         self.files_list = csv_file
@@ -205,7 +203,6 @@ def main():
             os.makedirs(os.path.join('embedder', args.dataset), exist_ok=True)
             torch.save(new_state_dict, os.path.join('embedder', args.dataset, 'embedder-low.pth'))
             print('Use pretrained features.')
-
 
     elif args.magnification == 'single' or args.magnification == 'high' or args.magnification == 'low':  
         i_classifier = mil.IClassifier(resnet, num_feats, output_class=args.num_classes).cuda()
