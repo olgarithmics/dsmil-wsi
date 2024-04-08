@@ -124,7 +124,7 @@ class SimCLR(object):
                     # save the model weights
                     best_valid_loss = valid_loss
                     print('Train Epoch: {} Valid loss: {}'.format(epoch_counter, valid_loss), flush=True)
-                    torch.save(model.state_dict(), os.path.join(model_checkpoints_folder, 'rcc_model.pth'))
+                    torch.save(model.state_dict(), os.path.join(model_checkpoints_folder, 'neuroblastoma_model.pth'))
                     print('saved', flush=True)
 
                 self.writer.add_scalar('validation_loss', valid_loss, global_step=valid_n_iter)

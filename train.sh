@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=test_gpu
-#SBATCH --output=/home/ofourkioti/Projects/dsmil-wsi/train_rcc.txt
+#SBATCH --output=/home/ofourkioti/Projects/dsmil-wsi/train_neuro.txt
 #SBATCH --error=/home/ofourkioti/Projects/dsmil-wsi/error.err
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
